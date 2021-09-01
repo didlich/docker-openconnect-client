@@ -1,9 +1,8 @@
-FROM alpine:edge
+FROM alpine:3.14
 
 LABEL maintainer="didlich.apps@gmail.com"
 
 RUN apk update && apk add --no-cache \
-  --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
   gnutls \
   openssh \
   openconnect \
@@ -16,6 +15,8 @@ RUN mkdir /var/run/sshd \
 RUN echo "root:root" | chpasswd
 RUN sed -i 's/#PermitRootLogin.*/PermitRootLogin\ yes/' /etc/ssh/sshd_config
 RUN sed -i 's/^AllowTcpForwarding no/AllowTcpForwarding yes/' /etc/ssh/sshd_config
+RUN sed -i 's/^GatewayPorts no/GatewayPorts yes/' /etc/ssh/sshd_config
+RUN sed -i 's/^#PermitTunnel no no/PermitTunnel yes/' /etc/ssh/sshd_config
 
 COPY  entrypoint.sh /
 EXPOSE 22

@@ -10,7 +10,16 @@ General purpose openconnect client docker container, which allows SSH tunnels fr
 
 ## Run
 
-    docker run -ti --rm --privileged -p 4122:22 --volume $(pwd)/vpn:/vpn/ --name vpn_mynet openconnect-client https://vpn.mynet.info:4443
+    docker run -ti --rm --privileged -p 4122:22 --volume $(pwd)/vpn:/vpn/ --name openconnect_client openconnect-client https://vpn.mynet.info:4443
+
+## DNS
+
+you can also use DNS for the remote network, just add the DNS server information when starting the container:
+
+    --dns 10.11.12.10 --dns-search company.net
+
+after that login into container and ping the host name to test if it works
+
 
 ## Tunnel
 now you can create an SSH tunnel to a remote host, or create SOCKS tunnel, to the destination network 
